@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!--<link rel="stylesheet" href="./dist/output.css">-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    
+  <script src="./app.js" defer></script>
+    <title>Document</title>
+</head>
+<body class="p-0 m-0"><div class="flex flex-row items-center justify-between pl-16 pr-16 font-semibold shadow font-poppins">
+        <!-- <h1 class="p-5 text-3xl">Products Data Fetch fakestoreap</h1> -->
+        <div class="flex">
+        <nav class="">
+        <a href="#" class="mr-[20px] text-[#f97316]">HOME</a>
+        <a href="#" class="mr-[20px] text-[#f97316]" id="mencloth">MEN CLOTHS</a>
+        <a href="#" class="mr-[20px] text-[#f97316]" id="womencloth">WOMEN CLOTHS</a>
+        <a href="#" class="mr-[20px] text-[#f97316]" id="jewelery">JEWELERY</a>
+        <a href="#" class="mr-[20px] text-[#f97316]">ELECTRONICS</a>
+        </nav>
+        </div>
+
+
+
+        <div class="flex flex-col">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+        </svg>
+        <span class="relative ml-[23px] mt-[-6px] cursor-pointer" id="zero">0</span></div>
+       
+    </div>
+    <div id="table" class="absolute right-0 flex flex-col bg-white z-1 w-[400px] max-md:w-[350px]">
+
+    </div>
+    <div class="flex flex-wrap justify-center gap-2" id="list">
+ </div>
+ <button id="fetchButton">Fetch Products</button>
+    <div id="productsContainer"></div>
+</body>
+</html>
