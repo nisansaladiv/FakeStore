@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     
   <script src="./app.js" defer></script>
-    <title>Document</title>
+    <title>Home</title>
 </head>
 <body class="p-0 m-0"><div class="flex flex-row items-center justify-between pl-16 pr-16 font-semibold shadow font-poppins">
         <!-- <h1 class="p-5 text-3xl">Products Data Fetch fakestoreap</h1> -->
@@ -31,8 +31,19 @@
         <span class="relative ml-[23px] mt-[-6px] cursor-pointer" id="zero">0</span></div>
        
     </div>
+<!--new update-->
+<div id="ta"  class="absolute right-0  flex-col bg-[#eee] z-1 w-[500px] max-md:w-[350px] hidden h-[100%]">
+  <div class="flex justify-end bg-black">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#ffffff] mr-[6px]" id="btn-colose">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+    </svg></div>
+    <div  class="absolute right-0 flex-col  z-1 w-[500px] max-md:w-[350px] bg-white" id="table"></div>
+  
+    <div class="absolute flex p-10 bg-black w-[100%]" style="bottom: 0px;"> <h1 class="text-[#ffffff]" id="txt-total">Sub Price:</h1></div>
+  </div>
+    
     <div id="table" class="absolute right-0 flex flex-col bg-white z-1 w-[400px] max-md:w-[350px]">
-
+      
     </div>
     <div class="flex flex-wrap justify-center gap-2" id="list">
  </div>
@@ -42,11 +53,10 @@
       
   </div>
 </div>
-    
-
-
-
-
-</div>
+    </div>
+    <footer class="bg-black">
+      <p>Author: Hege Refsnes<br>
+      <a href="mailto:hege@example.com">hege@example.com</a></p>
+    </footer>
 </body>
 </html>

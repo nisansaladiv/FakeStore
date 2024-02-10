@@ -39,12 +39,17 @@ var datasfilter = "";
 var x = 0;
 //let mencloth=document.getElementById("mencloth") as HTMLAnchorElement;
 var heddinText = document.getElementById("txt-main");
+var zeroicon = document.getElementById("zero");
+var msgcartemtyBox = document.getElementById("msg-cart-emty");
 function fetchData() {
     return __awaiter(this, void 0, void 0, function () {
         function setupAddToCartButtons(data) {
             var x = 0;
             var tablecartdata = '';
             var addCartButtons = document.querySelectorAll('[data-id]');
+            document.getElementById('btn-colose').addEventListener("click", function () {
+                document.getElementById('ta').style.display = 'none';
+            });
             addCartButtons.forEach(function (value) {
                 var button = value;
                 button.addEventListener("click", function () {
@@ -54,40 +59,46 @@ function fetchData() {
                     console.log(selectedItem.id);
                     document.getElementById('zero').innerHTML = x.toString();
                     //======= "Add Cart" button click event
-                    document.getElementById('zero').addEventListener("click", function () {
-                        var price = parseFloat(selectedItem.price);
-                        // Applying discount based on price
-                        if (price > 75) {
-                            price *= 0.9; // 10% discount for prices over $75
-                        }
-                        else if (price > 30) {
-                            price *= 0.95; // 5% discount for prices over $30
-                        }
-                        // Formatting price as USD currency
-                        var formattedPrice = new Intl.NumberFormat('en-US', {
-                            style: 'currency',
-                            currency: 'USD'
-                        }).format(price);
-                        var lineThroughClass = price > 30 ? 'line-through' : '';
-                        var displayStyle = price > 30 ? 'block' : 'none';
-                        tablecartdata += "\n                            <div class=\"flex w-full shadow-md mb-4\">\n                                <div class=\"flex-1 hidden\">\n                                    <h2>".concat(selectedItem.id, "</h2>\n                                </div>\n                                <div class=\"flex-1  mr-auto flex items-center justify-center\">\n                                    <img src=\"").concat(selectedItem.image, "\" class=\"w-[50px]  mt-3\">\n                                </div>\n                                <div class=\"flex-1 item center mr-auto mb-auto mt-auto\">\n                                    <h2 class=\"text-[20px]\">").concat(selectedItem.category, "</h2>\n                                   <h2 class=\"text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                                    <h2 class=\"text-[12px] text-[#16a34a]  ").concat(lineThroughClass, "\">").concat("$", " ").concat(selectedItem.price, " USD</h2>\n                                </div>\n                               \n                                <div class=\"ml-auto mb-auto mt-auto\">\n                                    <button class=\"pr-5 pl-5 pt-2 pb-2 bg-[#22c55e] text-[12px] text-white rounded btn-delete cursor-pointer\"><svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentColor\" class=\"w-6 h-6\">\n                                    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0\" />\n                                  </svg>\n                                  </button>\n                                </div>\n                            </div>");
-                        // ==== table with new item
-                        document.getElementById('table').innerHTML = tablecartdata;
-                        // == delete button
-                        var deleteButtons = document.querySelectorAll('.btn-delete');
-                        deleteButtons.forEach(function (button) {
-                            button.addEventListener("click", function () {
-                                var _a;
-                                var parentElement = (_a = button.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement;
-                                if (parentElement) {
-                                    x--;
-                                    document.getElementById('zero').innerHTML = x.toString();
-                                    var row = parentElement;
-                                    row.remove();
-                                }
-                            });
+                    var price = parseFloat(selectedItem.price);
+                    // Applying discount based on price
+                    if (price > 75) {
+                        price *= 0.9; // 10% discount for prices over $75
+                    }
+                    else if (price > 30) {
+                        price *= 0.95; // 5% discount for prices over $30
+                    }
+                    // Formatting price as USD currency
+                    var formattedPrice = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD'
+                    }).format(price);
+                    var lineThroughClass = price > 30 ? 'line-through' : '';
+                    var displayStyle = price > 30 ? 'block' : 'none';
+                    tablecartdata += "\n                            <div class=\"flex w-full shadow-md mb-4\">\n                                <div class=\"flex-1 hidden\">\n                                    <h2>".concat(selectedItem.id, "</h2>\n                                </div>\n                                <div class=\"flex-1  mr-auto flex items-center justify-center\">\n                                    <img src=\"").concat(selectedItem.image, "\" class=\"w-[50px]  mt-3\">\n                                </div>\n                                <div class=\"flex-1 item center mr-auto mb-auto mt-auto\">\n                                    <h2 class=\"text-[20px]\">").concat(selectedItem.category, "</h2>\n                                   <h2 class=\"text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                                    <h2 class=\"text-[12px] text-[#16a34a]  ").concat(lineThroughClass, "\">").concat("$", " ").concat(selectedItem.price, " USD</h2>\n                                </div>\n                               \n                                <div class=\"ml-auto mb-auto mt-auto\">\n                                    <button class=\"pr-5 pl-5 pt-2 pb-2 bg-[#22c55e] text-[12px] text-white rounded btn-delete cursor-pointer\"><svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentColor\" class=\"w-6 h-6\">\n                                    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0\" />\n                                  </svg>\n                                  </button>\n                                </div>\n                            </div>");
+                    // ==== table with new item
+                    document.getElementById('table').innerHTML = tablecartdata;
+                    // == delete button
+                    var deleteButtons = document.querySelectorAll('.btn-delete');
+                    deleteButtons.forEach(function (button) {
+                        button.addEventListener("click", function () {
+                            var _a;
+                            var parentElement = (_a = button.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement;
+                            if (parentElement) {
+                                x--;
+                                document.getElementById('zero').innerHTML = x.toString();
+                                var row = parentElement;
+                                row.remove();
+                            }
                         });
                     });
+                });
+                document.getElementById('zero').addEventListener("click", function () {
+                    document.getElementById('ta').style.display = 'block';
+                    document.getElementById('table').innerHTML = tablecartdata;
+                    if (zeroicon.textContent === '0') {
+                        document.getElementById('ta').style.display = 'none';
+                        msgcartemtyBox.style.display = 'block';
+                    }
                 });
             });
         }
@@ -121,7 +132,7 @@ function fetchData() {
                         var displayStyle = price > 30 ? 'block' : 'none';
                         heddinText.innerHTML = "Main Text";
                         fulllist_1 +=
-                            "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                    <img src=\"".concat(item.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(item.title, "\">\n                    <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(item.category, "</h1>\n                    <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(item.title, "</p>\n                    <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                        <h2 class=\"text-center text-[12px] text-[#16a34a]  ").concat(lineThroughClass, "\">").concat("$", " ").concat(item.price, " USD</h2>\n                    <div class=\"flex justify-center\">\n                        <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(item.id, "\">Add Cart</button>\n                    </div>\n                </div>");
+                            "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                <a href=\"./productPage.html?id=".concat(item.id, "\"><img src=\"").concat(item.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(item.title, "\">\n                    <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(item.category, "</h1></a>\n                    <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(item.title, "</p>\n                    <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                        <h2 class=\"text-center text-[12px] text-[#16a34a]  ").concat(lineThroughClass, "\">").concat("$", " ").concat(item.price, " USD</h2>\n                    <div class=\"flex justify-center\">\n                        <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(item.id, "\">Add Cart</button>\n                    </div>\n                </div>");
                     });
                     document.getElementById("productsContainer").innerHTML = fulllist_1;
                     setupAddToCartButtons(data_1);
@@ -130,6 +141,7 @@ function fetchData() {
                     // setupAddToCartButtons(data);
                     //mencloth=======================================//
                     document.getElementById('mencloth').addEventListener("click", function () {
+                        document.title = "MEN CLOTHS";
                         heddinText.innerHTML = "Main Text2";
                         var listElement = document.getElementById("list");
                         if (listElement) {
@@ -184,6 +196,7 @@ function fetchData() {
                     });
                     // Example usage
                     document.getElementById('home').addEventListener("click", function () {
+                        document.title = "HOME";
                         heddinText.innerHTML = "Main Text";
                         var listElement = document.getElementById("list");
                         if (listElement) {
@@ -251,6 +264,7 @@ function fetchData() {
                     });
                     //women
                     document.getElementById('womencloth').addEventListener("click", function () {
+                        document.title = "WOMEN CLOTHS";
                         heddinText.innerHTML = "Main Text4";
                         var listElement = document.getElementById("list");
                         if (listElement) {
@@ -304,6 +318,7 @@ function fetchData() {
                     });
                     //juwellary//
                     document.getElementById('jewelery').addEventListener("click", function () {
+                        document.title = "JEWELERY";
                         heddinText.innerHTML = "Main Text4";
                         var listElement = document.getElementById("list");
                         if (listElement) {
@@ -357,6 +372,7 @@ function fetchData() {
                     });
                     //electronics//
                     document.getElementById('electronics').addEventListener("click", function () {
+                        document.title = "ELECTRONICS";
                         heddinText.innerHTML = "Main Text5";
                         var listElement = document.getElementById("list");
                         if (listElement) {

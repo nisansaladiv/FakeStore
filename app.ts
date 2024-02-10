@@ -2,8 +2,9 @@ let tablecartdata: string = "";
 let datasfilter:string="";
 let x: number = 0;
 //let mencloth=document.getElementById("mencloth") as HTMLAnchorElement;
-let heddinText= document.getElementById("txt-main")as HTMLHeadElement;
-  
+let heddinText= document.getElementById("txt-main")!as HTMLHeadElement;
+let zeroicon= document.getElementById("zero")!as HTMLHeadElement;
+let msgcartemtyBox=document.getElementById("msg-cart-emty")! as HTMLDivElement;
 async function fetchData(): Promise<void> {
     
     try {
@@ -32,8 +33,8 @@ async function fetchData(): Promise<void> {
           heddinText.innerHTML="Main Text";
             fulllist +=
                 `<div class="w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4">
-                    <img src="${item.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${item.title}">
-                    <h1 class="text-center text-[24px] text-[#f97316]">${item.category}</h1>
+                <a href="./productPage.html?id=${item.id}"><img src="${item.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${item.title}">
+                    <h1 class="text-center text-[24px] text-[#f97316]">${item.category}</h1></a>
                     <p class="text-center text-[14px] text-[#94a3b8]">${item.title}</p>
                     <h2 class="text-center text-[12px] text-[#a31b16]" style="display: ${displayStyle}">${formattedPrice} USD</h2>
                         <h2 class="text-center text-[12px] text-[#16a34a]  ${lineThroughClass}">${"$"} ${item.price} USD</h2>
@@ -50,6 +51,9 @@ async function fetchData(): Promise<void> {
             let tablecartdata = '';
         
             const addCartButtons: NodeList = document.querySelectorAll('[data-id]');
+            document.getElementById('btn-colose')!.addEventListener("click", function() {
+                document.getElementById('ta')!.style.display = 'none';
+            });
             addCartButtons.forEach((value: Node) => {
                 const button = value as HTMLElement;
                 button.addEventListener("click", () => {
@@ -61,7 +65,7 @@ async function fetchData(): Promise<void> {
                     document.getElementById('zero')!.innerHTML = x.toString();
         
                     //======= "Add Cart" button click event
-                    document.getElementById('zero')!.addEventListener("click", () => {
+                  
                         let price = parseFloat(selectedItem.price);
         
                         // Applying discount based on price
@@ -116,10 +120,21 @@ async function fetchData(): Promise<void> {
                                 }
                             });
                         });
-                    });
+                   
+                });
+                
+                document.getElementById('zero')!.addEventListener("click", function() {
+                    document.getElementById('ta')!.style.display = 'block';
+                    document.getElementById('table')!.innerHTML = tablecartdata;
+                    if (zeroicon.textContent === '0') {
+                        document.getElementById('ta')!.style.display = 'none';
+                        msgcartemtyBox.style.display='block';
+                    }
                 });
             });
         }
+
+        
         setupAddToCartButtons(data);
         // Example usage:
         // Call this function passing the 'data' array as argument
@@ -127,6 +142,7 @@ async function fetchData(): Promise<void> {
         
         //mencloth=======================================//
         document.getElementById('mencloth')!.addEventListener("click", () => {
+            document.title = "MEN CLOTHS";
             heddinText.innerHTML="Main Text2";
             const listElement = document.getElementById("list");
             if (listElement) {
@@ -200,6 +216,7 @@ async function fetchData(): Promise<void> {
          // Example usage
 
          document.getElementById('home')!.addEventListener("click", () => {
+            document.title = "HOME";
             heddinText.innerHTML="Main Text";
             const listElement = document.getElementById("list");
             if (listElement) {
@@ -293,6 +310,7 @@ document.getElementById('home')!.addEventListener("click", () => {
     });
       //women
     document.getElementById('womencloth')!.addEventListener("click", () => {
+        document.title = "WOMEN CLOTHS";
         heddinText.innerHTML="Main Text4";
         const listElement = document.getElementById("list");
         if (listElement) {
@@ -361,6 +379,7 @@ document.getElementById('home')!.addEventListener("click", () => {
     
  //juwellary//
     document.getElementById('jewelery')!.addEventListener("click", () => {
+        document.title = "JEWELERY";
         heddinText.innerHTML="Main Text4";
         const listElement = document.getElementById("list");
         if (listElement) {
@@ -432,6 +451,7 @@ document.getElementById('home')!.addEventListener("click", () => {
 
   //electronics//
   document.getElementById('electronics')!.addEventListener("click", () => {
+    document.title = "ELECTRONICS";
     heddinText.innerHTML="Main Text5";
     const listElement = document.getElementById("list");
     if (listElement) {
