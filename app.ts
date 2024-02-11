@@ -5,8 +5,28 @@ let x: number = 0;
 let heddinText= document.getElementById("txt-main")!as HTMLHeadElement;
 let zeroicon= document.getElementById("zero")!as HTMLHeadElement;
 let msgcartemtyBox=document.getElementById("msg-cart-emty")! as HTMLDivElement;
+function navDisplayNone(){
+    document.getElementById('nav-box')!.style.display = 'none';
+}
+function navDisplay(){
+    document.getElementById('nav-box')!.style.display = 'flex';
+}
 async function fetchData(): Promise<void> {
-    
+   //nav/
+  document.getElementById('btn-menu')!.addEventListener("click", function() {
+    navDisplay();
+    document.getElementById('menu-close')!.style.display = 'none';
+});
+document.getElementById('menu-close')!.addEventListener("click", function() {
+    document.getElementById('btn-menu')!.style.display = 'flex';
+    document.getElementById('menu-close')!.style.display = 'none';
+    navDisplayNone();
+});
+document.getElementById('btn-menu')!.addEventListener("click", function() {
+    document.getElementById('btn-menu')!.style.display = 'none';
+    document.getElementById('menu-close')!.style.display = 'flex';
+});
+
     try {
         const response: Response = await fetch("https://fakestoreapi.com/products");
         const data: any[] = await response.json();
@@ -30,10 +50,11 @@ async function fetchData(): Promise<void> {
             let lineThroughClass = price > 30 ? 'line-through' : '';
             let displayStyle = price > 30 ? 'block' : 'none';
       
-          heddinText.innerHTML="Main Text";
+          
             fulllist +=
                 `<div class="w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4">
-                <a href="./productPage.html?id=${item.id}"><img src="${item.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${item.title}">
+                <a href="./productPage.html?id=${item.id}">
+                <img src="${item.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${item.title}">
                     <h1 class="text-center text-[24px] text-[#f97316]">${item.category}</h1></a>
                     <p class="text-center text-[14px] text-[#94a3b8]">${item.title}</p>
                     <h2 class="text-center text-[12px] text-[#a31b16]" style="display: ${displayStyle}">${formattedPrice} USD</h2>
@@ -141,83 +162,12 @@ async function fetchData(): Promise<void> {
         // setupAddToCartButtons(data);
         
         //mencloth=======================================//
-        document.getElementById('mencloth')!.addEventListener("click", () => {
-            document.title = "MEN CLOTHS";
-            heddinText.innerHTML="Main Text2";
-            const listElement = document.getElementById("list");
-            if (listElement) {
-                listElement.style.display = "none";
-            }
-
-            async function fetchAndFilterMenClothing(): Promise<void[]> {
-        
-                try {
-                    // const response = await fetch('https://fakestoreapi.com/products');
-                    // const data: Prod[] = await response.json();
-        
-                    // Filter data for men's clothing
-                    const menClothing = data.filter(product => product.category.toLowerCase().includes('men') && !product.category.toLowerCase().includes('women'));
-
-                    return menClothing;
-                } catch (error) {
-                    throw error;
-                }
-            }
-        
-            fetchAndFilterMenClothing()
-               .then(menClothingData => {
-                let fulllists: string = "";
-                menClothingData.forEach((product:any) => {
-                    
-                    console.log("ID: " + product.id);
-                    let price = parseFloat(product.price);
-
-                    // Applying discount based on price
-                    if (price > 75) {
-                        price *= 0.9; // 10% discount for prices over $75
-                    } else if (price > 30) {
-                        price *= 0.95; // 5% discount for prices over $30
-                    }
-
-                    // Formatting price as USD currency
-                    let formattedPrice = new Intl.NumberFormat('en-US', {
-                        style: 'currency',
-                        currency: 'USD'
-                    }).format(price);
-                    let lineThroughClass = price > 30 ? 'line-through' : '';
-                    let displayStyle = price > 30 ? 'block' : 'none';
-                    fulllists += 
-                    `<div class="w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4">
-                    <img src="${product.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${product.title}">
-                    <h1 class="text-center text-[24px] text-[#f97316]">${product.category}</h1>
-                    <p class="text-center text-[14px] text-[#94a3b8]">${product.title}</p>
-                    <div class="flex-1 item center mr-auto mb-auto mt-auto">
-                    
-                    <h2 class="text-center text-[12px] text-[#a31b16]" style="display: ${displayStyle}">${formattedPrice} USD</h2>
-                    <h2 class="text-center text-[12px] text-[#16a34a]  ${lineThroughClass}">${"$"} ${product.price} USD</h2>
-                </div>
-                    <div class="flex justify-center">
-                        <button class="text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]" data-id="${product.id}">Add Cart</button>
-                    </div>
-                </div>`;;
-
-                // ==== table with new item
-               
-                });
-    
-                // Update the products container with the list of men's clothing
-                document.getElementById('productsContainer')!.innerHTML = fulllists;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
-        
+       
          // Example usage
 
          document.getElementById('home')!.addEventListener("click", () => {
             document.title = "HOME";
-            heddinText.innerHTML="Main Text";
+            heddinText.innerHTML="Home";
             const listElement = document.getElementById("list");
             if (listElement) {
                 listElement.style.display = "block";
@@ -238,7 +188,8 @@ document.getElementById('home')!.addEventListener("click", () => {
 
 //mencloth=======================================//
         document.getElementById('mencloth')!.addEventListener("click", () => {
-            heddinText.innerHTML="Main Text3";
+            heddinText.innerHTML=" MEN CLOTHS";
+            document.title = "HOME";
             const listElement = document.getElementById("list");
             if (listElement) {
                 listElement.style.display = "none";
@@ -252,7 +203,7 @@ document.getElementById('home')!.addEventListener("click", () => {
         
                     // Filter data for men's clothing
                     const menClothing = data.filter(product => product.category.toLowerCase().includes('men') && !product.category.toLowerCase().includes('women'));
-
+                    
                     return menClothing;
                 } catch (error) {
                     throw error;
@@ -262,6 +213,9 @@ document.getElementById('home')!.addEventListener("click", () => {
             fetchAndFilterMenClothing()
                .then(menClothingData => {
                 let fulllists: string = "";
+                //get to data disndig odaer
+                menClothingData.sort((a: any, b: any) => parseFloat(b.id) - parseFloat(a.id));
+               console.log("Dis"+menClothingData);
                 menClothingData.forEach((product:any) => {
                     
                     console.log("ID: " + product.id);
@@ -283,7 +237,7 @@ document.getElementById('home')!.addEventListener("click", () => {
                     let displayStyle = price > 30 ? 'block' : 'none';
                     fulllists += 
                     `<div class="w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4">
-                    <img src="${product.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${product.title}">
+                    <a href="./productPage.html?id=${product.id}"><img src="${product.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${product.title}"></a>
                     <h1 class="text-center text-[24px] text-[#f97316]">${product.category}</h1>
                     <p class="text-center text-[14px] text-[#94a3b8]">${product.title}</p>
                     <div class="flex-1 item center mr-auto mb-auto mt-auto">
@@ -311,7 +265,7 @@ document.getElementById('home')!.addEventListener("click", () => {
       //women
     document.getElementById('womencloth')!.addEventListener("click", () => {
         document.title = "WOMEN CLOTHS";
-        heddinText.innerHTML="Main Text4";
+        heddinText.innerHTML="WOmen Cloths";
         const listElement = document.getElementById("list");
         if (listElement) {
             listElement.style.display = "none";
@@ -331,7 +285,11 @@ document.getElementById('home')!.addEventListener("click", () => {
        
         fetchAndFilterWomenClothing()
             .then(womenClothingData => {
+                //get to data disndig odaer
+                womenClothingData.sort((a: any, b: any) => parseFloat(b.id) - parseFloat(a.id));
+               console.log("Dis"+womenClothingData);
                 let fullListswo: string = "";
+                
                 womenClothingData.forEach(product => {
                     console.log("ID: " + product.id);
                     let price = parseFloat(product.price);
@@ -354,7 +312,7 @@ document.getElementById('home')!.addEventListener("click", () => {
     
                     fullListswo +=
                         `<div class="w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4">
-                            <img src="${product.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${product.title}">
+                        <a href="./productPage.html?id=${product.id}">  <img src="${product.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${product.title}"></a>
                             <h1 class="text-center text-[24px] text-[#f97316]">${product.category}</h1>
                             <p class="text-center text-[14px] text-[#94a3b8]">${product.title}</p>
                             <div class="flex-1 item center mr-auto mb-auto mt-auto">
@@ -380,7 +338,7 @@ document.getElementById('home')!.addEventListener("click", () => {
  //juwellary//
     document.getElementById('jewelery')!.addEventListener("click", () => {
         document.title = "JEWELERY";
-        heddinText.innerHTML="Main Text4";
+        heddinText.innerHTML="Jewelery";
         const listElement = document.getElementById("list");
         if (listElement) {
             listElement.style.display = "none";
@@ -400,6 +358,9 @@ document.getElementById('home')!.addEventListener("click", () => {
     
         fetchAndFilterjewelery()
             .then(JeweleryData => {
+                //get to data disndig odaer
+                JeweleryData.sort((a: any, b: any) => parseFloat(b.id) - parseFloat(a.id));
+               console.log("Dis"+JeweleryData);
                 let fullListswo: string = "";
                 JeweleryData.forEach(product => {
                     console.log("ID: " + product.id);
@@ -423,7 +384,7 @@ document.getElementById('home')!.addEventListener("click", () => {
     
                     fullListswo +=
                         `<div class="w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4">
-                            <img src="${product.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${product.title}">
+                        <a href="./productPage.html?id=${product.id}"> <img src="${product.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${product.title}"></a>
                             <h1 class="text-center text-[24px] text-[#f97316]">${product.category}</h1>
                             <p class="text-center text-[14px] text-[#94a3b8]">${product.title}</p>
                             <div class="flex-1 item center mr-auto mb-auto mt-auto">
@@ -452,7 +413,7 @@ document.getElementById('home')!.addEventListener("click", () => {
   //electronics//
   document.getElementById('electronics')!.addEventListener("click", () => {
     document.title = "ELECTRONICS";
-    heddinText.innerHTML="Main Text5";
+    heddinText.innerHTML="Electronics";
     const listElement = document.getElementById("list");
     if (listElement) {
         listElement.style.display = "none";
@@ -472,6 +433,9 @@ document.getElementById('home')!.addEventListener("click", () => {
 
     fetchAndFilterElectronics()
         .then(ElectronicsData => {
+              //get to data disndig odaer
+              ElectronicsData.sort((a: any, b: any) => parseFloat(b.id) - parseFloat(a.id));
+              console.log("Dis"+ElectronicsData);
             let fullListswo: string = "";
             ElectronicsData.forEach(product => {
                 console.log("ID: " + product.id);
@@ -495,7 +459,7 @@ document.getElementById('home')!.addEventListener("click", () => {
 
                 fullListswo +=
                     `<div class="w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4">
-                        <img src="${product.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${product.title}">
+                    <a href="./productPage.html?id=${product.id}"><img src="${product.image}" class="mb-2 h-[300px] p-10 mr-auto ml-auto" alt="${product.title}"></a>
                         <h1 class="text-center text-[24px] text-[#f97316]">${product.category}</h1>
                         <p class="text-center text-[14px] text-[#94a3b8]">${product.title}</p>
                         <div class="flex-1 item center mr-auto mb-auto mt-auto">

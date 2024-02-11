@@ -37,7 +37,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 // Get the id from the URL query parameters
 var urlParams = new URLSearchParams(window.location.search);
 var productId = urlParams.get('id');
-var imgProducts = document.getElementById('imgP');
 // Use the productId as needed
 console.log(productId);
 // Function to find a product by its ID
@@ -46,7 +45,7 @@ function findProductById(id, products) {
 }
 function getProductDetails(productId) {
     return __awaiter(this, void 0, void 0, function () {
-        var response, products, product, imgProducts_1, imgElement, error_1;
+        var response, products, product, price, formattedPrice, displayStyle, imgProducts, imgElement, categoryElement, nameElement, priceElement, descriptionElement, ratingElement, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -59,17 +58,41 @@ function getProductDetails(productId) {
                     products = _a.sent();
                     console.log(products);
                     product = findProductById(parseInt(productId), products);
+                    price = parseFloat(product.price);
+                    // Applying discount based on price
+                    if (price > 75) {
+                        price *= 0.9; // 10% discount for prices over $75
+                    }
+                    else if (price > 30) {
+                        price *= 0.95; // 5% discount for prices over $30
+                    }
+                    formattedPrice = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD'
+                    }).format(price);
+                    displayStyle = price > 30 ? 'block' : 'none';
                     // Example of accessing other properties of the product
                     if (product) {
-                        imgProducts_1 = product.image;
+                        imgProducts = product.image;
                         imgElement = document.getElementById('imgP');
-                        imgElement.src = imgProducts_1;
-                        console.log(imgProducts_1); // Log the image URL
-                        console.log("Product Id:", product.id);
-                        console.log("Product Name:", product.title);
-                        console.log("Product Price:", product.price);
-                        console.log("Product Category:", product.description);
-                        // You can access other properties of the product here
+                        imgElement.src = imgProducts;
+                        console.log(imgProducts);
+                        categoryElement = document.getElementById('p-catagary');
+                        nameElement = document.getElementById('p-nam');
+                        priceElement = document.getElementById('p-price');
+                        descriptionElement = document.getElementById('p-description');
+                        ratingElement = document.getElementById('p-rating');
+                        // Setting innerHTML if elements exist
+                        if (categoryElement)
+                            categoryElement.innerHTML = product.category;
+                        if (nameElement)
+                            nameElement.innerHTML = product.title;
+                        if (priceElement)
+                            priceElement.innerHTML = formattedPrice;
+                        if (descriptionElement)
+                            descriptionElement.innerHTML = product.description;
+                        if (ratingElement)
+                            ratingElement.innerHTML = product.rating;
                     }
                     else {
                         console.log("Product not found!");
@@ -84,8 +107,5 @@ function getProductDetails(productId) {
         });
     });
 }
-// Get the id from the URL query parameters
-var urlParams = new URLSearchParams(window.location.search);
-var productId = urlParams.get('id');
 // Call the function to fetch and display product details
 getProductDetails(productId);

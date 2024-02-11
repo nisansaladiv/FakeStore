@@ -41,6 +41,12 @@ var x = 0;
 var heddinText = document.getElementById("txt-main");
 var zeroicon = document.getElementById("zero");
 var msgcartemtyBox = document.getElementById("msg-cart-emty");
+function navDisplayNone() {
+    document.getElementById('nav-box').style.display = 'none';
+}
+function navDisplay() {
+    document.getElementById('nav-box').style.display = 'flex';
+}
 function fetchData() {
     return __awaiter(this, void 0, void 0, function () {
         function setupAddToCartButtons(data) {
@@ -106,12 +112,28 @@ function fetchData() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 3, , 4]);
-                    return [4 /*yield*/, fetch("https://fakestoreapi.com/products")];
+                    //nav/
+                    document.getElementById('btn-menu').addEventListener("click", function () {
+                        navDisplay();
+                        document.getElementById('menu-close').style.display = 'none';
+                    });
+                    document.getElementById('menu-close').addEventListener("click", function () {
+                        document.getElementById('btn-menu').style.display = 'flex';
+                        document.getElementById('menu-close').style.display = 'none';
+                        navDisplayNone();
+                    });
+                    document.getElementById('btn-menu').addEventListener("click", function () {
+                        document.getElementById('btn-menu').style.display = 'none';
+                        document.getElementById('menu-close').style.display = 'flex';
+                    });
+                    _a.label = 1;
                 case 1:
+                    _a.trys.push([1, 4, , 5]);
+                    return [4 /*yield*/, fetch("https://fakestoreapi.com/products")];
+                case 2:
                     response = _a.sent();
                     return [4 /*yield*/, response.json()];
-                case 2:
+                case 3:
                     data_1 = _a.sent();
                     fulllist_1 = "";
                     data_1.forEach(function (item) {
@@ -130,9 +152,8 @@ function fetchData() {
                         }).format(price);
                         var lineThroughClass = price > 30 ? 'line-through' : '';
                         var displayStyle = price > 30 ? 'block' : 'none';
-                        heddinText.innerHTML = "Main Text";
                         fulllist_1 +=
-                            "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                <a href=\"./productPage.html?id=".concat(item.id, "\"><img src=\"").concat(item.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(item.title, "\">\n                    <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(item.category, "</h1></a>\n                    <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(item.title, "</p>\n                    <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                        <h2 class=\"text-center text-[12px] text-[#16a34a]  ").concat(lineThroughClass, "\">").concat("$", " ").concat(item.price, " USD</h2>\n                    <div class=\"flex justify-center\">\n                        <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(item.id, "\">Add Cart</button>\n                    </div>\n                </div>");
+                            "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                <a href=\"./productPage.html?id=".concat(item.id, "\">\n                <img src=\"").concat(item.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(item.title, "\">\n                    <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(item.category, "</h1></a>\n                    <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(item.title, "</p>\n                    <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                        <h2 class=\"text-center text-[12px] text-[#16a34a]  ").concat(lineThroughClass, "\">").concat("$", " ").concat(item.price, " USD</h2>\n                    <div class=\"flex justify-center\">\n                        <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(item.id, "\">Add Cart</button>\n                    </div>\n                </div>");
                     });
                     document.getElementById("productsContainer").innerHTML = fulllist_1;
                     setupAddToCartButtons(data_1);
@@ -140,64 +161,10 @@ function fetchData() {
                     // Call this function passing the 'data' array as argument
                     // setupAddToCartButtons(data);
                     //mencloth=======================================//
-                    document.getElementById('mencloth').addEventListener("click", function () {
-                        document.title = "MEN CLOTHS";
-                        heddinText.innerHTML = "Main Text2";
-                        var listElement = document.getElementById("list");
-                        if (listElement) {
-                            listElement.style.display = "none";
-                        }
-                        function fetchAndFilterMenClothing() {
-                            return __awaiter(this, void 0, void 0, function () {
-                                var menClothing;
-                                return __generator(this, function (_a) {
-                                    try {
-                                        menClothing = data_1.filter(function (product) { return product.category.toLowerCase().includes('men') && !product.category.toLowerCase().includes('women'); });
-                                        return [2 /*return*/, menClothing];
-                                    }
-                                    catch (error) {
-                                        throw error;
-                                    }
-                                    return [2 /*return*/];
-                                });
-                            });
-                        }
-                        fetchAndFilterMenClothing()
-                            .then(function (menClothingData) {
-                            var fulllists = "";
-                            menClothingData.forEach(function (product) {
-                                console.log("ID: " + product.id);
-                                var price = parseFloat(product.price);
-                                // Applying discount based on price
-                                if (price > 75) {
-                                    price *= 0.9; // 10% discount for prices over $75
-                                }
-                                else if (price > 30) {
-                                    price *= 0.95; // 5% discount for prices over $30
-                                }
-                                // Formatting price as USD currency
-                                var formattedPrice = new Intl.NumberFormat('en-US', {
-                                    style: 'currency',
-                                    currency: 'USD'
-                                }).format(price);
-                                var lineThroughClass = price > 30 ? 'line-through' : '';
-                                var displayStyle = price > 30 ? 'block' : 'none';
-                                fulllists +=
-                                    "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                    <img src=\"".concat(product.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(product.title, "\">\n                    <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(product.category, "</h1>\n                    <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(product.title, "</p>\n                    <div class=\"flex-1 item center mr-auto mb-auto mt-auto\">\n                    \n                    <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                    <h2 class=\"text-center text-[12px] text-[#16a34a]  ").concat(lineThroughClass, "\">").concat("$", " ").concat(product.price, " USD</h2>\n                </div>\n                    <div class=\"flex justify-center\">\n                        <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(product.id, "\">Add Cart</button>\n                    </div>\n                </div>");
-                                ;
-                                // ==== table with new item
-                            });
-                            // Update the products container with the list of men's clothing
-                            document.getElementById('productsContainer').innerHTML = fulllists;
-                        })
-                            .catch(function (error) {
-                            console.error('Error:', error);
-                        });
-                    });
                     // Example usage
                     document.getElementById('home').addEventListener("click", function () {
                         document.title = "HOME";
-                        heddinText.innerHTML = "Main Text";
+                        heddinText.innerHTML = "Home";
                         var listElement = document.getElementById("list");
                         if (listElement) {
                             listElement.style.display = "block";
@@ -209,7 +176,8 @@ function fetchData() {
                     });
                     //mencloth=======================================//
                     document.getElementById('mencloth').addEventListener("click", function () {
-                        heddinText.innerHTML = "Main Text3";
+                        heddinText.innerHTML = " MEN CLOTHS";
+                        document.title = "HOME";
                         var listElement = document.getElementById("list");
                         if (listElement) {
                             listElement.style.display = "none";
@@ -232,6 +200,9 @@ function fetchData() {
                         fetchAndFilterMenClothing()
                             .then(function (menClothingData) {
                             var fulllists = "";
+                            //get to data disndig odaer
+                            menClothingData.sort(function (a, b) { return parseFloat(b.id) - parseFloat(a.id); });
+                            console.log("Dis" + menClothingData);
                             menClothingData.forEach(function (product) {
                                 console.log("ID: " + product.id);
                                 var price = parseFloat(product.price);
@@ -250,7 +221,7 @@ function fetchData() {
                                 var lineThroughClass = price > 30 ? 'line-through' : '';
                                 var displayStyle = price > 30 ? 'block' : 'none';
                                 fulllists +=
-                                    "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                    <img src=\"".concat(product.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(product.title, "\">\n                    <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(product.category, "</h1>\n                    <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(product.title, "</p>\n                    <div class=\"flex-1 item center mr-auto mb-auto mt-auto\">\n                    \n                    <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                    <h2 class=\"text-center text-[12px] text-[#16a34a]  ").concat(lineThroughClass, "\">").concat("$", " ").concat(product.price, " USD</h2>\n                </div>\n                    <div class=\"flex justify-center\">\n                        <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(product.id, "\">Add Cart</button>\n                    </div>\n                </div>");
+                                    "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                    <a href=\"./productPage.html?id=".concat(product.id, "\"><img src=\"").concat(product.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(product.title, "\"></a>\n                    <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(product.category, "</h1>\n                    <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(product.title, "</p>\n                    <div class=\"flex-1 item center mr-auto mb-auto mt-auto\">\n                    \n                    <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                    <h2 class=\"text-center text-[12px] text-[#16a34a]  ").concat(lineThroughClass, "\">").concat("$", " ").concat(product.price, " USD</h2>\n                </div>\n                    <div class=\"flex justify-center\">\n                        <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(product.id, "\">Add Cart</button>\n                    </div>\n                </div>");
                                 ;
                                 // ==== table with new item
                             });
@@ -265,7 +236,7 @@ function fetchData() {
                     //women
                     document.getElementById('womencloth').addEventListener("click", function () {
                         document.title = "WOMEN CLOTHS";
-                        heddinText.innerHTML = "Main Text4";
+                        heddinText.innerHTML = "WOmen Cloths";
                         var listElement = document.getElementById("list");
                         if (listElement) {
                             listElement.style.display = "none";
@@ -287,6 +258,9 @@ function fetchData() {
                         }
                         fetchAndFilterWomenClothing()
                             .then(function (womenClothingData) {
+                            //get to data disndig odaer
+                            womenClothingData.sort(function (a, b) { return parseFloat(b.id) - parseFloat(a.id); });
+                            console.log("Dis" + womenClothingData);
                             var fullListswo = "";
                             womenClothingData.forEach(function (product) {
                                 console.log("ID: " + product.id);
@@ -306,7 +280,7 @@ function fetchData() {
                                 var lineThroughClass = price > 30 ? 'line-through' : '';
                                 var displayStyle = price > 30 ? 'block' : 'none';
                                 fullListswo +=
-                                    "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                            <img src=\"".concat(product.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(product.title, "\">\n                            <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(product.category, "</h1>\n                            <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(product.title, "</p>\n                            <div class=\"flex-1 item center mr-auto mb-auto mt-auto\">\n                                <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                                <h2 class=\"text-center text-[12px] text-[#16a34a] ").concat(lineThroughClass, "\">").concat("$", " ").concat(product.price, " USD</h2>\n                            </div>\n                            <div class=\"flex justify-center\">\n                                <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(product.id, "\">Add Cart</button>\n                            </div>\n                        </div>");
+                                    "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                        <a href=\"./productPage.html?id=".concat(product.id, "\">  <img src=\"").concat(product.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(product.title, "\"></a>\n                            <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(product.category, "</h1>\n                            <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(product.title, "</p>\n                            <div class=\"flex-1 item center mr-auto mb-auto mt-auto\">\n                                <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                                <h2 class=\"text-center text-[12px] text-[#16a34a] ").concat(lineThroughClass, "\">").concat("$", " ").concat(product.price, " USD</h2>\n                            </div>\n                            <div class=\"flex justify-center\">\n                                <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(product.id, "\">Add Cart</button>\n                            </div>\n                        </div>");
                             });
                             // Update the products container with the list of women's clothing
                             document.getElementById('productsContainer').innerHTML = fullListswo;
@@ -319,7 +293,7 @@ function fetchData() {
                     //juwellary//
                     document.getElementById('jewelery').addEventListener("click", function () {
                         document.title = "JEWELERY";
-                        heddinText.innerHTML = "Main Text4";
+                        heddinText.innerHTML = "Jewelery";
                         var listElement = document.getElementById("list");
                         if (listElement) {
                             listElement.style.display = "none";
@@ -341,6 +315,9 @@ function fetchData() {
                         }
                         fetchAndFilterjewelery()
                             .then(function (JeweleryData) {
+                            //get to data disndig odaer
+                            JeweleryData.sort(function (a, b) { return parseFloat(b.id) - parseFloat(a.id); });
+                            console.log("Dis" + JeweleryData);
                             var fullListswo = "";
                             JeweleryData.forEach(function (product) {
                                 console.log("ID: " + product.id);
@@ -360,7 +337,7 @@ function fetchData() {
                                 var lineThroughClass = price > 30 ? 'line-through' : '';
                                 var displayStyle = price > 30 ? 'block' : 'none';
                                 fullListswo +=
-                                    "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                            <img src=\"".concat(product.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(product.title, "\">\n                            <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(product.category, "</h1>\n                            <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(product.title, "</p>\n                            <div class=\"flex-1 item center mr-auto mb-auto mt-auto\">\n                                <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                                <h2 class=\"text-center text-[12px] text-[#16a34a] ").concat(lineThroughClass, "\">").concat("$", " ").concat(product.price, " USD</h2>\n                            </div>\n                            <div class=\"flex justify-center\">\n                                <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(product.id, "\">Add Cart</button>\n                            </div>\n                        </div>");
+                                    "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                        <a href=\"./productPage.html?id=".concat(product.id, "\"> <img src=\"").concat(product.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(product.title, "\"></a>\n                            <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(product.category, "</h1>\n                            <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(product.title, "</p>\n                            <div class=\"flex-1 item center mr-auto mb-auto mt-auto\">\n                                <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                                <h2 class=\"text-center text-[12px] text-[#16a34a] ").concat(lineThroughClass, "\">").concat("$", " ").concat(product.price, " USD</h2>\n                            </div>\n                            <div class=\"flex justify-center\">\n                                <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(product.id, "\">Add Cart</button>\n                            </div>\n                        </div>");
                             });
                             // Update the products container with the list of women's clothing
                             document.getElementById('productsContainer').innerHTML = fullListswo;
@@ -373,7 +350,7 @@ function fetchData() {
                     //electronics//
                     document.getElementById('electronics').addEventListener("click", function () {
                         document.title = "ELECTRONICS";
-                        heddinText.innerHTML = "Main Text5";
+                        heddinText.innerHTML = "Electronics";
                         var listElement = document.getElementById("list");
                         if (listElement) {
                             listElement.style.display = "none";
@@ -395,6 +372,9 @@ function fetchData() {
                         }
                         fetchAndFilterElectronics()
                             .then(function (ElectronicsData) {
+                            //get to data disndig odaer
+                            ElectronicsData.sort(function (a, b) { return parseFloat(b.id) - parseFloat(a.id); });
+                            console.log("Dis" + ElectronicsData);
                             var fullListswo = "";
                             ElectronicsData.forEach(function (product) {
                                 console.log("ID: " + product.id);
@@ -414,7 +394,7 @@ function fetchData() {
                                 var lineThroughClass = price > 30 ? 'line-through' : '';
                                 var displayStyle = price > 30 ? 'block' : 'none';
                                 fullListswo +=
-                                    "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                        <img src=\"".concat(product.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(product.title, "\">\n                        <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(product.category, "</h1>\n                        <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(product.title, "</p>\n                        <div class=\"flex-1 item center mr-auto mb-auto mt-auto\">\n                            <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                            <h2 class=\"text-center text-[12px] text-[#16a34a] ").concat(lineThroughClass, "\">").concat("$", " ").concat(product.price, " USD</h2>\n                        </div>\n                        <div class=\"flex justify-center\">\n                            <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(product.id, "\">Add Cart</button>\n                        </div>\n                    </div>");
+                                    "<div class=\"w-full sm:w-full md:w-1/2 lg:w-1/4 p-4 shadow-md mb-4\">\n                    <a href=\"./productPage.html?id=".concat(product.id, "\"><img src=\"").concat(product.image, "\" class=\"mb-2 h-[300px] p-10 mr-auto ml-auto\" alt=\"").concat(product.title, "\"></a>\n                        <h1 class=\"text-center text-[24px] text-[#f97316]\">").concat(product.category, "</h1>\n                        <p class=\"text-center text-[14px] text-[#94a3b8]\">").concat(product.title, "</p>\n                        <div class=\"flex-1 item center mr-auto mb-auto mt-auto\">\n                            <h2 class=\"text-center text-[12px] text-[#a31b16]\" style=\"display: ").concat(displayStyle, "\">").concat(formattedPrice, " USD</h2>\n                            <h2 class=\"text-center text-[12px] text-[#16a34a] ").concat(lineThroughClass, "\">").concat("$", " ").concat(product.price, " USD</h2>\n                        </div>\n                        <div class=\"flex justify-center\">\n                            <button class=\"text-center bg-[#f97316] text-[#fff] pr-20 pl-20 pt-2 pb-2 rounded-[20px] font-bold hover:bg-[#ea580c]\" data-id=\"").concat(product.id, "\">Add Cart</button>\n                        </div>\n                    </div>");
                             });
                             // Update the products container with the list of women's clothing
                             document.getElementById('productsContainer').innerHTML = fullListswo;
@@ -424,12 +404,12 @@ function fetchData() {
                             console.error('Error:', error);
                         });
                     });
-                    return [3 /*break*/, 4];
-                case 3:
+                    return [3 /*break*/, 5];
+                case 4:
                     error_1 = _a.sent();
                     console.error("Error fetching data:", error_1);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                    return [3 /*break*/, 5];
+                case 5: return [2 /*return*/];
             }
         });
     });
